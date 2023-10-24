@@ -14,7 +14,7 @@ TypeScript is the preferred language for this challenge, but JavaScript will als
 
 
 ### Additional guidelines
-1. While this is a code challenge, approach it as you would a production task. Consider all aspects such as code quality, performance, and maintainability.
+1. While this is a code challenge, approach it as you would a production task. Consider all aspects such as code quality, performance, UX, and maintainability.
 
 ### Submission Instructions
 1. **Clone the Repository**: Clone this repository to your local machine.
