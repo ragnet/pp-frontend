@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import * as API from '@api';
 
 /* TODO:
@@ -8,16 +8,36 @@ Complete the UserProvider to manage user data and phone number masking.
 3. Pass down the user data and the toggle function to the context value.
 */
 
-const UserContext = React.createContext(null);
+export const UserContext = React.createContext(null);
 
-interface UserProviderProps {
-  children: React.ReactNode;
-};
+export const UserProvider = ({children}) => {
+  const [userData, setUserData] = useState({});
 
-export const UserProvider = (props) => {
-  return null;
-};
+  const handlePhoneVisibilityToggle = async () => {
+    if (! userData['unmasked_phone']) {
+      const phoneNumber = await API.phone();    
 
-export const useUser = () => {
-  //
+      setUserData({...userData, ['unmasked_phone']: phoneNumber.phone});
+    }
+  };
+
+  // On mount, load user information
+  useEffect(() => {
+    const fetchData = async () => {
+      setUserData(await API.me());
+    }
+
+    fetchData();
+  }, []);
+
+  const context = {
+    user: userData,
+    togglePhoneNumber: handlePhoneVisibilityToggle
+  }
+
+  return (
+    <UserContext.Provider value={context}>
+      {children}
+    </UserContext.Provider>
+  )
 };
